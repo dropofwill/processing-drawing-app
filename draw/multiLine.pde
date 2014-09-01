@@ -18,17 +18,13 @@ class MultiLine extends Entity {
 
 				float ax = a.getX(),
 					  ay = a.getY(),
-					  bx = a.getX(),
-					  by = a.getY();
-
-				println(ax, ay, bx, by);
+					  bx = b.getX(),
+					  by = b.getY();
 
 				stroke(0);
 				strokeWeight(2);
 				line(ax, ay, bx, by);
-				line(ax, ay, mouseX, mouseY);
 			}
-
 			a.render();
 		}
 	}

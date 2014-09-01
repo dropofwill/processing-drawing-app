@@ -17,25 +17,10 @@ String curMode = "";
 
 void setup() {
 	size(width, height);
-	smooth();
+	smooth(2);
 	background(255);
-
-	// Setup the UI in a nice line along the top
-	int curWidth = 40,
-		curLeft = 5;
-
-	buttonList[0] = new Button(displayList, saveImage,  curLeft, 5, curWidth, 20, 12, "Save", bg, fg);
-	curLeft += curWidth + 45;
-	buttonList[1] = new Button(displayList, clearDrawing, curLeft, 5, curWidth, 20, 12, "Clear", bg, fg);
-	curLeft += curWidth + 5;
-	curWidth = 80;
-	buttonList[2] = new Button(displayList, toggleFree, curLeft, 5, curWidth, 20, 12, "Free Mode", bg, fg);
-	curLeft += curWidth + 5;
-	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Point Mode", bg, fg);
-	curLeft += curWidth + 5;
-	buttonList[4] = new Button(displayList, toggleCurve, curLeft, 5, curWidth, 20, 12, "Curve Mode", bg, fg);
-	curLeft += curWidth + 5;
-	buttonList[5] = new Button(displayList, toggleEdit, curLeft, 5, curWidth, 20, 12, "Edit Mode", bg, fg);
+	
+	renderButtons();
 }
 
 void draw() {
@@ -61,6 +46,26 @@ void draw() {
 		}
 	}
 }
+
+// Setup the UI in a nice line along the top
+void renderButtons() {
+	int curWidth = 40,
+		curLeft = 5;
+
+	buttonList[0] = new Button(displayList, saveImage,  curLeft, 5, curWidth, 20, 12, "Save", bg, fg);
+	curLeft += curWidth + 45;
+	buttonList[1] = new Button(displayList, clearDrawing, curLeft, 5, curWidth, 20, 12, "Clear", bg, fg);
+	curLeft += curWidth + 5;
+	curWidth = 80;
+	buttonList[2] = new Button(displayList, toggleFree, curLeft, 5, curWidth, 20, 12, "Free Mode", bg, fg);
+	curLeft += curWidth + 5;
+	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Point Mode", bg, fg);
+	curLeft += curWidth + 5;
+	buttonList[4] = new Button(displayList, toggleCurve, curLeft, 5, curWidth, 20, 12, "Curve Mode", bg, fg);
+	curLeft += curWidth + 5;
+	buttonList[5] = new Button(displayList, toggleEdit, curLeft, 5, curWidth, 20, 12, "Edit Mode", bg, fg);
+}
+
 
 // Create a "runnable" blocks of code that can be passed as a parameters
 Runnable saveImage = new Runnable() {
@@ -112,10 +117,30 @@ Runnable clearDrawing = new Runnable() {
 	public void run() {
 		background(bg);
 		println("Clear");
+
+		Iterator<Entity> iter = displayList.iterator();
+		while ( iter.hasNext() ) {
+			Entity e = iter.next();
+			if (!(e instanceof Button)) {
+				e.hide();
+				iter.remove();
+				e = null;
+			}
+		}
 	}
 };
 
 void mouseClicked() {
+	for (int i=0; i < buttonList.length; i++) {
+		Button currentButton = buttonList[i];
+		if (currentButton instanceof Button) {
+			if (((Button) currentButton).over()) {
+				((Button) currentButton).click();
+				return;
+			}
+		}
+	}
+
 	if (curMode == "point") {
 		MultiLine curLine = lineList.get(lineList.size()-1);
 		curLine.addPoint(mouseX, mouseY);
@@ -123,18 +148,8 @@ void mouseClicked() {
 	}
 
 	if (curMode == "curve") {
-
 	}
 
-	for (int i=0; i < buttonList.length; i++) {
-		Button currentButton = buttonList[i];
-		if (currentButton instanceof Button) {
-			if (((Button) currentButton).over()) {
-				((Button) currentButton).click();
-			}
-		}
+	if (curMode == "edit") {
 	}
-}
-
-void mousePressed() {
 }
