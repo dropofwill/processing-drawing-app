@@ -5,7 +5,7 @@ HW 1, Will Paul (whp3652)
 Basic drawing app built with the Java library processing
 
 ###Classes
-Button, Line, and Curve classes. 
+Button, Point, Line, and Curve classes. 
 
 ###Arrays
 There are 5 buttons created and stored as an array when the app starts.

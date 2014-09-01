@@ -7,6 +7,7 @@ Button button;
 ArrayList<Entity> displayList = new ArrayList<Entity>();
 ArrayList<MultiLine> lineList = new ArrayList<MultiLine>();
 Button[] buttonList = new Button[6];
+Point pointToMove = null;
 
 int fg = color(0),
 	bg = color(255),
@@ -24,6 +25,8 @@ void setup() {
 }
 
 void draw() {
+	background(bg);
+
 	// Render the objects in the displayList
 	Iterator<Entity> iter = displayList.iterator();
 	while ( iter.hasNext() ) {
@@ -36,13 +39,6 @@ void draw() {
 			e.hide();
 			iter.remove();
 			e = null;
-		}
-	}
-
-	if (mousePressed) {
-		if (curMode == "free") {
-			stroke(fg);
-			line(mouseX, mouseY, pmouseX, pmouseY);
 		}
 	}
 }
@@ -149,7 +145,54 @@ void mouseClicked() {
 
 	if (curMode == "curve") {
 	}
+}
+
+void mousePressed() {
+	if (curMode == "free") {
+		MultiLine freeLine = new MultiLine(displayList, fg, 1);
+		lineList.add(freeLine);
+	}
 
 	if (curMode == "edit") {
+		for (int i=0; i < lineList.size(); i++) {
+			ArrayList<Point> aPointList = lineList.get(i).getPointList();
+
+			for (int j=0; j < aPointList.size(); j++) {
+				Point aPoint = aPointList.get(j);
+
+				if (aPoint.over()) {
+					pointToMove = aPoint;
+					println(aPoint);
+					return;
+				}
+			}
+		}
+	}
+
+	if (curMode == "curve") {
+		MultiLine newMultiLine = new MultiLine(displayList, fg, 1);
+		lineList.add(newMultiLine);
+	}
+}
+
+void mouseDragged() {
+	if (curMode == "edit") {
+		if (pointToMove != null) {
+			pointToMove.moveTo(mouseX, mouseY);
+		}
+	}
+
+	if (curMode == "free") {
+		MultiLine curMultiLine = lineList.get(lineList.size()-1);
+		
+		curMultiLine.addPoint(mouseX, mouseY);
+		//stroke(fg);
+		//line(mouseX, mouseY, pmouseX, pmouseY);
+	}
+}
+
+void mouseReleased() {
+	if (curMode == "curve") {
+
 	}
 }

@@ -1,5 +1,5 @@
 class Point {
-  float x,y,d;
+  float x, y, d;
   Point normal = null;
   boolean showLabels = false;
 
