@@ -1,20 +1,44 @@
 class Button extends Entity {
 	float x,
-	      y;
-	char title;
-	color fill,
-	      text;
+	      y,
+	      w,
+	      h,
+	      fSize;
+	String title;
+	color bg,
+	      fg;
+	boolean over = false,
+		pressed = false;
 
-	Button(ArrayList<Entity> displayList, float x_, float y_, char title_, color fill_, color text_) {
+	Button(ArrayList<Entity> displayList, float x_, float y_, float w_, float h_, float fSize_, String title_, color bg_, color fg_) {
 		super(displayList);
 		x = x_;
 		y = y_;
+		w = w_;
+		h = h_;
+		fSize = fSize_;
 		title = title_;
-		fill = fill_;
-		text = text_;
+		fg = fg_;
+		bg = bg_;
 	}
 
-	void render() {
+	public void render() {
+		fill(bg);
+		rect(x, y, w, h, 8);
 
+		fill(fg);
+		textAlign(CENTER, CENTER);
+		textSize(fSize);
+		text(title, x, y, w, h);
+	}
+
+	public boolean over() {
+		if (mouseX >= x && mouseX <= x+w &&
+			mouseY >= y && mouseY <= y+h) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
