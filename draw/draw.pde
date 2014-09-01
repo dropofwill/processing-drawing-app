@@ -2,14 +2,14 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Iterator;
 
-Ball ball;
 Button button;
 
 ArrayList<Entity> displayList = new ArrayList<Entity>();
-Button[] buttonList = new Button[5];
+ArrayList<MultiLine> lineList = new ArrayList<MultiLine>();
+Button[] buttonList = new Button[6];
 
-int black = color(0),
-	white = color(255),
+int fg = color(0),
+	bg = color(255),
 	width = 1080,
 	height = 720;
 
@@ -19,22 +19,23 @@ void setup() {
 	size(width, height);
 	smooth();
 	background(255);
-	//ball = new Ball(displayList, width/2, height/2, 50);
 
 	// Setup the UI in a nice line along the top
 	int curWidth = 40,
 		curLeft = 5;
 
-	buttonList[0] = new Button(displayList, saveImage,  curLeft, 5, curWidth, 20, 12, "Save", color(255), color(0));
+	buttonList[0] = new Button(displayList, saveImage,  curLeft, 5, curWidth, 20, 12, "Save", bg, fg);
 	curLeft += curWidth + 45;
-	buttonList[1] = new Button(displayList, clearDrawing, curLeft, 5, curWidth, 20, 12, "Clear", color(255), color(0));
+	buttonList[1] = new Button(displayList, clearDrawing, curLeft, 5, curWidth, 20, 12, "Clear", bg, fg);
 	curLeft += curWidth + 5;
 	curWidth = 80;
-	buttonList[2] = new Button(displayList, toggleFree, curLeft, 5, curWidth, 20, 12, "Free Mode", color(255), color(0));
+	buttonList[2] = new Button(displayList, toggleFree, curLeft, 5, curWidth, 20, 12, "Free Mode", bg, fg);
 	curLeft += curWidth + 5;
-	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Point Mode", color(255), color(0));
+	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Point Mode", bg, fg);
 	curLeft += curWidth + 5;
-	buttonList[4] = new Button(displayList, toggleCurve, curLeft, 5, curWidth, 20, 12, "Curve Mode", color(255), color(0));
+	buttonList[4] = new Button(displayList, toggleCurve, curLeft, 5, curWidth, 20, 12, "Curve Mode", bg, fg);
+	curLeft += curWidth + 5;
+	buttonList[5] = new Button(displayList, toggleEdit, curLeft, 5, curWidth, 20, 12, "Edit Mode", bg, fg);
 }
 
 void draw() {
@@ -55,8 +56,7 @@ void draw() {
 
 	if (mousePressed) {
 		if (curMode == "free") {
-			println("free hand");
-			stroke(0);
+			stroke(fg);
 			line(mouseX, mouseY, pmouseX, pmouseY);
 		}
 	}
@@ -84,6 +84,8 @@ Runnable toggleFree = new Runnable() {
 Runnable togglePoint = new Runnable() {
 	@Override
 	public void run() {
+		MultiLine newMultiLine = new MultiLine(displayList, fg, 1);
+		lineList.add(newMultiLine);
 		curMode = "point";
 		println(curMode);
 	}
@@ -97,15 +99,33 @@ Runnable toggleCurve = new Runnable() {
 	}
 };
 
+Runnable toggleEdit = new Runnable() {
+	@Override
+	public void run() {
+		curMode = "edit";
+		println(curMode);
+	}
+};
+
 Runnable clearDrawing = new Runnable() {
 	@Override
 	public void run() {
-		background(white);
+		background(bg);
 		println("Clear");
 	}
 };
 
 void mouseClicked() {
+	if (curMode == "point") {
+		MultiLine curLine = lineList.get(lineList.size()-1);
+		curLine.addPoint(mouseX, mouseY);
+		println(curLine.getPointList());
+	}
+
+	if (curMode == "curve") {
+
+	}
+
 	for (int i=0; i < buttonList.length; i++) {
 		Button currentButton = buttonList[i];
 		if (currentButton instanceof Button) {
@@ -113,13 +133,6 @@ void mouseClicked() {
 				((Button) currentButton).click();
 			}
 		}
-	}
-
-	if (curMode == "point") {
-
-	}
-	if (curMode == "curve") {
-
 	}
 }
 

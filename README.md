@@ -15,4 +15,6 @@ I used polymorphism to keep track of drawing things to the screen. So there is o
 ###Interactivity
 Instead of subclassing each button or putting all the business logic in the main mouseClicked event, I decided to pass "runnable" blocks of code to the button's constructor, which are then called whenever mouseClicked happens on top of the button.
 
+For the save button I append a timestamp to the file name so that it won't be overwritten each time.
+
 Events used: mouseClicked(), mousePressed, mouseDragged()
