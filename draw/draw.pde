@@ -11,6 +11,7 @@ Point pointToMove = null;
 
 int fg = color(0),
 	bg = color(255),
+	highlight = color(20),
 	width = 1080,
 	height = 720;
 
@@ -53,13 +54,13 @@ void renderButtons() {
 	buttonList[1] = new Button(displayList, clearDrawing, curLeft, 5, curWidth, 20, 12, "Clear", bg, fg);
 	curLeft += curWidth + 5;
 	curWidth = 80;
-	buttonList[2] = new Button(displayList, toggleFree, curLeft, 5, curWidth, 20, 12, "Free Mode", bg, fg);
+	buttonList[2] = new Button(displayList, toggleFree, curLeft, 5, curWidth, 20, 12, "Free Mode", bg, fg, "free");
 	curLeft += curWidth + 5;
-	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Point Mode", bg, fg);
+	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Point Mode", bg, fg, "point");
 	curLeft += curWidth + 5;
-	buttonList[4] = new Button(displayList, toggleCurve, curLeft, 5, curWidth, 20, 12, "Curve Mode", bg, fg);
+	buttonList[4] = new Button(displayList, toggleCurve, curLeft, 5, curWidth, 20, 12, "Curve Mode", bg, fg, "curve");
 	curLeft += curWidth + 5;
-	buttonList[5] = new Button(displayList, toggleEdit, curLeft, 5, curWidth, 20, 12, "Edit Mode", bg, fg);
+	buttonList[5] = new Button(displayList, toggleEdit, curLeft, 5, curWidth, 20, 12, "Edit Mode", bg, fg, "edit");
 }
 
 
@@ -77,7 +78,12 @@ Runnable saveImage = new Runnable() {
 Runnable toggleFree = new Runnable() {
 	@Override
 	public void run() {
-		curMode = "free";
+		if (curMode != "free") {
+			curMode = "free";
+		}
+		else {
+			curMode = "";
+		}
 		println(curMode);
 	}
 };
@@ -85,9 +91,14 @@ Runnable toggleFree = new Runnable() {
 Runnable togglePoint = new Runnable() {
 	@Override
 	public void run() {
-		MultiLine newMultiLine = new MultiLine(displayList, fg, 1);
-		lineList.add(newMultiLine);
-		curMode = "point";
+		if (curMode != "point") {
+			MultiLine newMultiLine = new MultiLine(displayList, fg, 1);
+			lineList.add(newMultiLine);
+			curMode = "point";
+		}
+		else {
+			curMode = "";
+		}
 		println(curMode);
 	}
 };
@@ -95,7 +106,12 @@ Runnable togglePoint = new Runnable() {
 Runnable toggleCurve = new Runnable() {
 	@Override
 	public void run() {
-		curMode = "curve";
+		if (curMode != "curve") {
+			curMode = "curve";
+		}
+		else {
+			curMode = "";
+		}
 		println(curMode);
 	}
 };
@@ -103,7 +119,12 @@ Runnable toggleCurve = new Runnable() {
 Runnable toggleEdit = new Runnable() {
 	@Override
 	public void run() {
-		curMode = "edit";
+		if (curMode != "edit") {
+			curMode = "edit";
+		}
+		else {
+			curMode = "";
+		}
 		println(curMode);
 	}
 };
@@ -184,8 +205,8 @@ void mouseDragged() {
 
 	if (curMode == "free") {
 		MultiLine curMultiLine = lineList.get(lineList.size()-1);
-		
 		curMultiLine.addPoint(mouseX, mouseY);
+
 		//stroke(fg);
 		//line(mouseX, mouseY, pmouseX, pmouseY);
 	}

@@ -25,7 +25,16 @@ class MultiLine extends Entity {
 				strokeWeight(2);
 				line(ax, ay, bx, by);
 			}
-			a.render();
+
+			// Only render dots in edit mode
+			if (curMode == "edit") {
+				a.render();
+			}
+		}
+
+		// Render first dot in point mode
+		if (curMode == "point" && pointList.size() == 1) {
+			pointList.get(0).render();
 		}
 	}
 

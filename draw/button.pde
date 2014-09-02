@@ -4,7 +4,8 @@ class Button extends Entity {
 		  w,
 		  h,
 		  fSize;
-	String title;
+	String title,
+		   mode;
 	color bg,
 		  fg;
 	Runnable action;
@@ -20,6 +21,20 @@ class Button extends Entity {
 		title = title_;
 		fg = fg_;
 		bg = bg_;
+	}
+
+	Button(ArrayList<Entity> displayList, Runnable action_, int x_, int y_, int w_, int h_, int fSize_, String title_, color bg_, color fg_, String mode_) {
+		super(displayList);
+		action = action_;
+		x = x_;
+		y = y_;
+		w = w_;
+		h = h_;
+		fSize = fSize_;
+		title = title_;
+		fg = fg_;
+		bg = bg_;
+		mode = mode_;
 	}
 
 	public void render() {
@@ -45,5 +60,12 @@ class Button extends Entity {
 
 	public void click() {
 		action.run();
+
+		if (curMode == mode) {
+			bg = color(200);
+		}
+		else {
+			bg = color(255);
+		}
 	}
 }
