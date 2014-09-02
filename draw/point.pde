@@ -12,11 +12,6 @@ class Point {
     normal = normalize();
   }
 
-  // scale
-  Point scale(float f) {
-    return new Point(f * x, f * y);
-  }
-
   // normalize
   Point normalize() {
     return new Point(x/d, y/d);
@@ -37,20 +32,6 @@ class Point {
 
   void moveBy(float x_, float y_) {
   	  moveTo(x + x_, y + y_);
-  }
-
-  // rotate this point w.r.t. another point
-  Point rotateOver(Point o, float angle) {
-    float nx = x - o.x, ny = y - o.y,
-          mx = nx * cos(angle) - ny * sin(angle),
-          my = nx * sin(angle) + ny * cos(angle);
-		  moveTo(mx + o.x,my + o.y);
-    return this;
-  }
-
-  // reflect a point through this point
-  Point reflect(Point original) {
-    return new Point(2 * x - original.x, 2 * y - original.y);
   }
 
   // Is the mouse roughly over this point?
