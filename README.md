@@ -17,7 +17,7 @@ Instead of subclassing each button or putting all the business logic in the main
 
 For the save button I append a timestamp to the file name so that it won't be overwritten each time.
 
-Events used:
-• mouseClicked() (for buttons and plotting points in point mode),
-• mousePressed() (for initiating a new line in freehand mode and selecting points in edit mode),
-• mouseDragged() (for drawing in freehand mode and moving points about in edit mode).
+####Events used:
+- mouseClicked() (for buttons and plotting points in point mode),
+- mousePressed() (for initiating a new line in freehand mode and selecting points in edit mode),
+- mouseDragged() (for drawing in freehand mode and moving points about in edit mode).
