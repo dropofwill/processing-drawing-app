@@ -60,12 +60,19 @@ class Button extends Entity {
 
 	public void click() {
 		action.run();
+		setState();
+	}
 
+	public void setState() {
 		if (curMode == mode) {
 			bg = color(200);
 		}
 		else {
 			bg = color(255);
 		}
+	}
+
+	public void resetState() {
+		bg = color(255);
 	}
 }

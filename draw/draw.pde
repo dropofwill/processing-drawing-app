@@ -149,8 +149,14 @@ Runnable clearDrawing = new Runnable() {
 
 void mouseClicked() {
 	for (int i=0; i < buttonList.length; i++) {
+		buttonList[i].resetState();
+	}
+
+	for (int i=0; i < buttonList.length; i++) {
 		Button currentButton = buttonList[i];
+
 		if (currentButton instanceof Button) {
+
 			if (((Button) currentButton).over()) {
 				((Button) currentButton).click();
 				return;
@@ -161,7 +167,7 @@ void mouseClicked() {
 	if (curMode == "point") {
 		MultiLine curLine = lineList.get(lineList.size()-1);
 		curLine.addPoint(mouseX, mouseY);
-		println(curLine.getPointList());
+		//println(curLine.getPointList());
 	}
 
 	if (curMode == "curve") {
@@ -183,7 +189,6 @@ void mousePressed() {
 
 				if (aPoint.over()) {
 					pointToMove = aPoint;
-					println(aPoint);
 					return;
 				}
 			}
