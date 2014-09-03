@@ -6,8 +6,11 @@ Button button;
 
 ArrayList<Entity> displayList = new ArrayList<Entity>();
 ArrayList<MultiLine> lineList = new ArrayList<MultiLine>();
+ArrayList<Bezier> curveList = new ArrayList<Bezier>();
 Button[] buttonList = new Button[6];
+
 Point pointToMove = null;
+Point curPoint = null;
 
 int fg = color(0),
 	bg = color(255),
@@ -167,10 +170,11 @@ void mouseClicked() {
 	if (curMode == "point") {
 		MultiLine curLine = lineList.get(lineList.size()-1);
 		curLine.addPoint(mouseX, mouseY);
-		//println(curLine.getPointList());
 	}
 
 	if (curMode == "curve") {
+		Bezier newCurve = new Bezier(displayList, fg, 1);
+		curveList.add(newCurve);
 	}
 }
 
@@ -196,8 +200,6 @@ void mousePressed() {
 	}
 
 	if (curMode == "curve") {
-		MultiLine newMultiLine = new MultiLine(displayList, fg, 1);
-		lineList.add(newMultiLine);
 	}
 }
 
@@ -211,9 +213,6 @@ void mouseDragged() {
 	if (curMode == "free") {
 		MultiLine curMultiLine = lineList.get(lineList.size()-1);
 		curMultiLine.addPoint(mouseX, mouseY);
-
-		//stroke(fg);
-		//line(mouseX, mouseY, pmouseX, pmouseY);
 	}
 }
 

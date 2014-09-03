@@ -40,9 +40,7 @@ class MultiLine extends Entity {
 
 	public void addPoint(float x_, float y_) {
 		Point point_ = new Point(x_, y_);
-		println(point_);
 		pointList.add(point_);
-		println(pointList);
 	}
 
 	public ArrayList<Point> getPointList() {
