@@ -26,8 +26,8 @@ class MultiLine extends Entity {
 				line(ax, ay, bx, by);
 			}
 
-			// Only render dots in edit mode
-			if (curMode == "edit") {
+			// Only render dots in move mode
+			if (curMode == "move" || curMode == "remove") {
 				a.render();
 			}
 		}

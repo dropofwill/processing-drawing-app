@@ -6,7 +6,6 @@ Button button;
 
 ArrayList<Entity> displayList = new ArrayList<Entity>();
 ArrayList<MultiLine> lineList = new ArrayList<MultiLine>();
-ArrayList<Bezier> curveList = new ArrayList<Bezier>();
 Button[] buttonList = new Button[6];
 
 Point pointToMove = null;
@@ -61,9 +60,9 @@ void renderButtons() {
 	curLeft += curWidth + 5;
 	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Point Mode", bg, fg, "point");
 	curLeft += curWidth + 5;
-	buttonList[4] = new Button(displayList, toggleCurve, curLeft, 5, curWidth, 20, 12, "Curve Mode", bg, fg, "curve");
+	buttonList[4] = new Button(displayList, toggleRemove, curLeft, 5, curWidth, 20, 12, "Remove Mode", bg, fg, "remove");
 	curLeft += curWidth + 5;
-	buttonList[5] = new Button(displayList, toggleEdit, curLeft, 5, curWidth, 20, 12, "Edit Mode", bg, fg, "edit");
+	buttonList[5] = new Button(displayList, toggleMove, curLeft, 5, curWidth, 20, 12, "Move Mode", bg, fg, "move");
 }
 
 
@@ -106,11 +105,11 @@ Runnable togglePoint = new Runnable() {
 	}
 };
 
-Runnable toggleCurve = new Runnable() {
+Runnable toggleRemove = new Runnable() {
 	@Override
 	public void run() {
-		if (curMode != "curve") {
-			curMode = "curve";
+		if (curMode != "remove") {
+			curMode = "remove";
 		}
 		else {
 			curMode = "";
@@ -119,11 +118,11 @@ Runnable toggleCurve = new Runnable() {
 	}
 };
 
-Runnable toggleEdit = new Runnable() {
+Runnable toggleMove = new Runnable() {
 	@Override
 	public void run() {
-		if (curMode != "edit") {
-			curMode = "edit";
+		if (curMode != "move") {
+			curMode = "move";
 		}
 		else {
 			curMode = "";
@@ -151,20 +150,24 @@ Runnable clearDrawing = new Runnable() {
 };
 
 void mouseClicked() {
+	boolean checkBtnState = false;
+
 	for (int i=0; i < buttonList.length; i++) {
-		buttonList[i].resetState();
+		if (((Button) buttonList[i]).over()) {
+			checkBtnState = true;
+		}
 	}
 
-	for (int i=0; i < buttonList.length; i++) {
-		Button currentButton = buttonList[i];
-
-		if (currentButton instanceof Button) {
+	if (checkBtnState == true) {
+		for (int i=0; i < buttonList.length; i++) {
+			Button currentButton = buttonList[i];
+			currentButton.resetState();
 
 			if (((Button) currentButton).over()) {
 				((Button) currentButton).click();
-				return;
 			}
 		}
+		return;
 	}
 
 	if (curMode == "point") {
@@ -172,9 +175,18 @@ void mouseClicked() {
 		curLine.addPoint(mouseX, mouseY);
 	}
 
-	if (curMode == "curve") {
-		Bezier newCurve = new Bezier(displayList, fg, 1);
-		curveList.add(newCurve);
+	if (curMode == "remove") {
+		for (int i=0; i < lineList.size(); i++) {
+			ArrayList<Point> aPointList = lineList.get(i).getPointList();
+
+			for (int j=0; j < aPointList.size(); j++) {
+				Point aPoint = aPointList.get(j);
+
+				if (aPoint.over()) {
+					aPointList.remove(j);				
+				}
+			}
+		}
 	}
 }
 
@@ -184,7 +196,7 @@ void mousePressed() {
 		lineList.add(freeLine);
 	}
 
-	if (curMode == "edit") {
+	if (curMode == "move") {
 		for (int i=0; i < lineList.size(); i++) {
 			ArrayList<Point> aPointList = lineList.get(i).getPointList();
 
@@ -198,13 +210,10 @@ void mousePressed() {
 			}
 		}
 	}
-
-	if (curMode == "curve") {
-	}
 }
 
 void mouseDragged() {
-	if (curMode == "edit") {
+	if (curMode == "move") {
 		if (pointToMove != null) {
 			pointToMove.moveTo(mouseX, mouseY);
 		}
@@ -213,11 +222,5 @@ void mouseDragged() {
 	if (curMode == "free") {
 		MultiLine curMultiLine = lineList.get(lineList.size()-1);
 		curMultiLine.addPoint(mouseX, mouseY);
-	}
-}
-
-void mouseReleased() {
-	if (curMode == "curve") {
-
 	}
 }

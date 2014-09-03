@@ -8,7 +8,7 @@ Basic drawing app built with the Java library processing
 
 
 ###Classes
-Button, Point, and Line classes. 
+Entity, Button, Point, and Line classes. 
 
 ###Arrays
 There are 5 buttons created and stored as an array when the app starts.
@@ -22,5 +22,5 @@ For the save button I append a timestamp to the file name so that it won't be ov
 
 ####Events used:
 - mouseClicked() (for buttons and plotting points in point mode),
-- mousePressed() (for initiating a new line in freehand mode and selecting points in edit mode),
-- mouseDragged() (for drawing in freehand mode and moving points about in edit mode).
+- mousePressed() (for initiating a new line in freehand mode and selecting points in move mode),
+- mouseDragged() (for drawing in freehand mode and moving points about in move mode).
