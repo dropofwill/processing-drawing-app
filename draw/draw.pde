@@ -55,14 +55,17 @@ void renderButtons() {
 	curLeft += curWidth + 45;
 	buttonList[1] = new Button(displayList, clearDrawing, curLeft, 5, curWidth, 20, 12, "Clear", bg, fg);
 	curLeft += curWidth + 5;
-	curWidth = 80;
-	buttonList[2] = new Button(displayList, toggleFree, curLeft, 5, curWidth, 20, 12, "Free Mode", bg, fg, "free");
+	curWidth = 70;
+	buttonList[2] = new Button(displayList, toggleFree, curLeft, 5, curWidth, 20, 12, "Freehand", bg, fg, "free");
 	curLeft += curWidth + 5;
-	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Point Mode", bg, fg, "point");
+	curWidth = 75;
+	buttonList[3] = new Button(displayList, togglePoint, curLeft, 5, curWidth, 20, 12, "Plot Points", bg, fg, "point");
 	curLeft += curWidth + 5;
-	buttonList[4] = new Button(displayList, toggleRemove, curLeft, 5, curWidth, 20, 12, "Remove Mode", bg, fg, "remove");
+	curWidth = 100;
+	buttonList[4] = new Button(displayList, toggleRemove, curLeft, 5, curWidth, 20, 12, "Remove Points", bg, fg, "remove");
 	curLeft += curWidth + 5;
-	buttonList[5] = new Button(displayList, toggleMove, curLeft, 5, curWidth, 20, 12, "Move Mode", bg, fg, "move");
+	curWidth = 85;
+	buttonList[5] = new Button(displayList, toggleMove, curLeft, 5, curWidth, 20, 12, "Move Points", bg, fg, "move");
 }
 
 
