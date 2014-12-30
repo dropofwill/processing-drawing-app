@@ -1,14 +1,8 @@
 Processing Java Drawing App
 ===========
 
-HW 1, Will Paul (whp3652)
-
-Basic drawing app built with the Java library processing
-
-[Repository](www.github.com/dropofwill/processing-drawing-app): www.github.com/dropofwill/processing-drawing-app
-
 ### Usage
-This drawing app lets you draw lines either freehand or by plotting points. What makes it cool is how editable the lines are, processing makes it easy to draw things to the screen, but keeping track of what you've already put there can be a bit more challenging.
+This drawing app lets you draw lines either freehand or by plotting points. These created lines are editable.
 
 To accomplish this I created my own Point and Line classes as well as a displayList used to handle rendering in draw().
 
